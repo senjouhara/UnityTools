@@ -5,36 +5,46 @@ using UnityEngine;
 public class AddLodGroup : MonoBehaviour
 {
 
-    private MeshRenderer[] renderers;
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    private MeshRenderer[] mrs;
+    public float lodvalue;
 
     [ContextMenu("AddLOD")]
-    private void AddLOD()
+    void AddLOD()
     {
-        renderers = GetComponentsInChildren<MeshRenderer>();
-        LOD[] lods = new LOD[2];
-        
-        for (int i = 0; i < renderers.Length; i++)
+        mrs = GetComponentsInChildren<MeshRenderer>();
+
+        for (int i = 0; i < mrs.Length; i++)
         {
-            var group = renderers[i].GetComponent<LODGroup>();
-            Renderer[] mr = new Renderer[1];
-            mr[0] = renderers[i];
+            var group = mrs[i].gameObject.GetComponent<LODGroup>();
             if (!group)
             {
-                group = renderers[i].gameObject.AddComponent<LODGroup>();
+                group = mrs[i].gameObject.AddComponent<LODGroup>();
             }
-            lods[0] = new LOD(0.1f, mr);
+            LOD[] lods = new LOD[2];
 
+            Renderer[] renderers = new Renderer[1];
+            renderers[0] = mrs[i];
+            //if (lodvalue != 0)
+            //{
+            //    lods[0] = new LOD(0.05f, renderers);
+            //}
+            //else
+            //{
+            //    lods[0] = new LOD(lodvalue, renderers);
+            //}
+            lods[0] = new LOD(0.05f, renderers);
             group.SetLODs(lods);
+        }
 
+    }
+
+    [ContextMenu("Remove")]
+    void Remove()
+    {
+        var lgs = GetComponentsInChildren<LODGroup>();
+        for (int i = 0; i < lgs.Length; i++)
+        {
+            DestroyImmediate(lgs[i]);
         }
 
     }
