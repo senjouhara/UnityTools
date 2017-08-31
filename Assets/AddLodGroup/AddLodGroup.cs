@@ -20,7 +20,7 @@ public class AddLodGroup : MonoBehaviour
             {
                 group = mrs[i].gameObject.AddComponent<LODGroup>();
             }
-            LOD[] lods = new LOD[2];
+            LOD[] lods = new LOD[1];
 
             Renderer[] renderers = new Renderer[1];
             renderers[0] = mrs[i];
@@ -32,7 +32,7 @@ public class AddLodGroup : MonoBehaviour
             //{
             //    lods[0] = new LOD(lodvalue, renderers);
             //}
-            lods[0] = new LOD(0.05f, renderers);
+            lods[0] = new LOD(0.1f, renderers);
             group.SetLODs(lods);
         }
 
